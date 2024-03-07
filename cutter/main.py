@@ -34,5 +34,7 @@ if __name__ == "__main__":
     for segment in segments:
         segment['startTime'] += VIDEO_TIME_OFFSET
         segment['endTime'] += VIDEO_TIME_OFFSET
-
-    extract_video_segments(INPUT_VIDEO_PATH, OUTPUT_VIDEO_PATH, segments)
+    
+    segments_to_keep = [segment for segment in segments if segment['type'] == "KEEP"]
+    
+    extract_video_segments(INPUT_VIDEO_PATH, OUTPUT_VIDEO_PATH, segments_to_keep)

@@ -51,12 +51,16 @@ class TimestampRecorderGUI:
         self.discard_button = tk.Button(self.root, text="Discard Segment", command=self.discard_segment)
         self.discard_button.pack(pady=5)
         self.discard_button['state'] = "disabled"
+
+        self.log_label = tk.Label(self.root, text="Logs will appear here.")
+        self.log_label.pack(pady=5)
     
     def start_mainloop(self):
         self.root.mainloop()
 
     def log(self, log_str):
         print(log_str)
+        self.log_label.config(text=log_str)
 
     def get_recording_elapsed_time_from_timestamp(self, timestamp):
         if self.start_timestamp is None:
