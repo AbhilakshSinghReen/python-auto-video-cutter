@@ -3,8 +3,11 @@ from moviepy.editor import concatenate_videoclips, VideoFileClip
 from data_handling import (
     INPUT_VIDEO_PATH,
     OUTPUT_VIDEO_PATH,
-    SEGMENTS_JSON_FILE_PATH,
+    get_segments,
 )
+
+
+VIDEO_TIME_OFFSET = 5.000
 
 
 def extract_video_segments(input_file_path, output_file_path, segments):
@@ -12,7 +15,10 @@ def extract_video_segments(input_file_path, output_file_path, segments):
 
     segment_clips = []
 
-    for start_time, end_time in segments:
+    for segment in segments:
+        start_time = segment['startTime']
+        end_time = segment['endTime']
+        
         segment = input_video.subclip(start_time, end_time)
         segment_clips.append(segment)
 
@@ -23,6 +29,10 @@ def extract_video_segments(input_file_path, output_file_path, segments):
 
 
 if __name__ == "__main__":
-    segments = [(0.5, 10.2), (20.3, 30.7), (40.0, 50.5)]
+    segments = get_segments()
+
+    for segment in segments:
+        segment['startTime'] += VIDEO_TIME_OFFSET
+        segment['endTime'] += VIDEO_TIME_OFFSET
 
     extract_video_segments(INPUT_VIDEO_PATH, OUTPUT_VIDEO_PATH, segments)
